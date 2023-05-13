@@ -1,5 +1,19 @@
-public class Main {
+import javafx.application.*;
+import javafx.fxml.FXMLLoader;
+import javafx.stage.*;
+import javafx.scene.*;
+
+
+public class Main extends Application {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        launch(args);
+    }
+
+    public void start(Stage primaryStage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
+        primaryStage.setTitle("Multithreaded Pattern Generator");
+        primaryStage.setScene(new Scene(root));
+        primaryStage.setResizable(false);
+        primaryStage.show();
     }
 }
