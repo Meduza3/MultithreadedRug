@@ -6,11 +6,12 @@ public class RandomGenerator {
         random = new Random();
     }
 
-    public double nextInt(int i) {
+    public int nextInt(int i) {
         return random.nextInt(i);
     }
 
     public double nextDouble(){
         return random.nextDouble();
     }
+
 }

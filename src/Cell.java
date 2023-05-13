@@ -22,16 +22,18 @@ public class Cell extends Rectangle implements Runnable {
     @Override
     public void run() {
         while(true){
+            System.out.println("Start: " + Thread.currentThread().getName());
             if( rng.nextDouble() < Controller.getProbability()){
                 Color col = new Color(rng.nextDouble(), rng.nextDouble(), rng.nextDouble(), 1);
                 setFill(col);
-                setStroke(col);
+                //setStroke(col);
             }
             try {
-                Thread.sleep((long) (Controller.getSpeed() + (long) (rng.nextDouble() * 1000)));
+                Thread.sleep((long) (rng.nextInt(Controller.getSpeed()) + Controller.getSpeed()/2));
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+            System.out.println("End: " + Thread.currentThread().getName());
         }
     }
 }
