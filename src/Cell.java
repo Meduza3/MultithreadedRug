@@ -47,7 +47,7 @@ public class Cell extends Rectangle implements Runnable {
                         //System.out.println("Changing color");
                         Color col = getAverageColor();
                         setFill(col);
-                        setStroke(col);
+                        //setStroke(col);
                     }
                     // set the flag to indicate that this color computation has finished
                     hasFinished = true;
