@@ -52,10 +52,10 @@ public class Cell extends Rectangle implements Runnable {
         Cell down = getCell((int) (x/width), (int) (y/height) + 1, (Pane) getParent());
 
         if (left == null) {
-            left = getCell(Controller.getn() - 1, (int) (y/height), (Pane) getParent());
+            left = getCell(79, (int) (y/height), (Pane) getParent());
         }
         if (up == null) {
-            up = getCell((int) (x/width),Controller.getm() - 1, (Pane) getParent());
+            up = getCell((int) (x/width),39, (Pane) getParent());
         }
         if (right == null) {
             right = getCell(0, (int) (y/height), (Pane) getParent());
@@ -63,11 +63,6 @@ public class Cell extends Rectangle implements Runnable {
         if (down == null) {
             down = getCell((int) (x/width), 0, (Pane) getParent());
         }
-
-        System.out.println(left.id);
-        System.out.println(right.id);
-        System.out.println(up.id);
-        System.out.println(down.id);
 
         Color cl = (Color) left.getFill();
         Color cr = (Color) right.getFill();
