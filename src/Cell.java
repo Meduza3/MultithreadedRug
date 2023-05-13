@@ -9,6 +9,7 @@ public class Cell extends Rectangle implements Runnable {
     private Color color;
     private String id;
     public RandomGenerator rng = new RandomGenerator();
+    private boolean hasFinished = true;
     public Cell(double x, double y, double width, double height) {
         super(x, y, width, height);
 
@@ -24,6 +25,11 @@ public class Cell extends Rectangle implements Runnable {
 
     @Override
     public void run() {
+        try {
+            Thread.sleep(3*(rng.nextInt(Controller.getSpeed()) + Controller.getSpeed()/2));
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         while(true){
             System.out.println("Start: " + Thread.currentThread().getName());
             if( rng.nextDouble() < Controller.getProbability()){
@@ -52,10 +58,10 @@ public class Cell extends Rectangle implements Runnable {
         Cell down = getCell((int) (x/width), (int) (y/height) + 1, (Pane) getParent());
 
         if (left == null) {
-            left = getCell(79, (int) (y/height), (Pane) getParent());
+            left = getCell(Controller.getn() - 1, (int) (y/height), (Pane) getParent());
         }
         if (up == null) {
-            up = getCell((int) (x/width),39, (Pane) getParent());
+            up = getCell((int) (x/width),Controller.getm() - 1, (Pane) getParent());
         }
         if (right == null) {
             right = getCell(0, (int) (y/height), (Pane) getParent());
