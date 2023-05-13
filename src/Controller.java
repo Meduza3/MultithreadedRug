@@ -12,7 +12,7 @@ public class Controller implements Initializable {
     private double cellwidth;
     private double cellHeight;
     private static int speed = 500;
-    private static double probability = 0.3;
+    private static double probability = 1.0;
     static int n;
     static int m;
     @FXML
@@ -24,8 +24,8 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("Initializing");
-        n = 100; //Number of cells in a row
-        m = 50; //Number of cells in a column
+        n = 20; //Number of cells in a row
+        m = 10; //Number of cells in a column
         cellwidth = (double) 1000 / n;
         cellHeight = (double) 500 / m;
         for (int i = 0; i < n; i++) {
