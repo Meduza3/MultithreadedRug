@@ -10,9 +10,11 @@ public class Controller implements Initializable {
 private double cellwidth;
 private double cellHeight;
 private double speed;
-private double probability;
+private double probability = 0.2;
 @FXML
 private Pane pane;
+
+RandomGenerator rng = new RandomGenerator();
 
 //METHODS
 @Override
