@@ -10,10 +10,14 @@ public class Main extends Application {
     }
 
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
-        primaryStage.setTitle("Multithreaded Pattern Generator");
-        primaryStage.setScene(new Scene(root));
-        primaryStage.setResizable(false);
-        primaryStage.show();
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
+            primaryStage.setTitle("Multithreaded Pattern Generator");
+            primaryStage.setScene(new Scene(root));
+            primaryStage.setResizable(false);
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
