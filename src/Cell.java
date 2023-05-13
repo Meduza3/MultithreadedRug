@@ -10,6 +10,7 @@ public class Cell extends Rectangle implements Runnable {
     private String id;
     public RandomGenerator rng = new RandomGenerator();
     private boolean hasFinished = true;
+    public boolean isPaused = false;
     public Cell(double x, double y, double width, double height) {
         super(x, y, width, height);
 
@@ -26,37 +27,39 @@ public class Cell extends Rectangle implements Runnable {
     @Override
     public void run() {
         try {
-            Thread.sleep(5L * (rng.nextInt(Controller.getSpeed()) + Controller.getSpeed() / 2));
+            Thread.sleep(10L * (rng.nextInt(Controller.getSpeed()) + Controller.getSpeed() / 2));
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
         while (true) {
-            System.out.println("Start: " + Thread.currentThread().getName());
-            synchronized (this) { // synchronize on the current cell
-                while (!hasFinished) { // wait until the previous color computation has finished
-                    try {
-                        wait();
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
+            if (isPaused == false) {
+                //System.out.println("Start: " + Thread.currentThread().getName());
+                synchronized (this) { // synchronize on the current cell
+                    while (!hasFinished) { // wait until the previous color computation has finished
+                        try {
+                            wait();
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
+                    // compute the new color
+                    if (rng.nextDouble() < Controller.getProbability()) {
+                        //System.out.println("Changing color");
+                        Color col = getAverageColor();
+                        setFill(col);
+                        setStroke(col);
+                    }
+                    // set the flag to indicate that this color computation has finished
+                    hasFinished = true;
+                    notifyAll(); // notify other threads that this thread has finished
                 }
-                // compute the new color
-                if (rng.nextDouble() < Controller.getProbability()) {
-                    System.out.println("Changing color");
-                    Color col = getAverageColor();
-                    setFill(col);
-                    setStroke(col);
+                try {
+                    Thread.sleep((long) (rng.nextInt(Controller.getSpeed()) + Controller.getSpeed() / 2));
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
                 }
-                // set the flag to indicate that this color computation has finished
-                hasFinished = true;
-                notifyAll(); // notify other threads that this thread has finished
+                //System.out.println("End: " + Thread.currentThread().getName());
             }
-            try {
-                Thread.sleep((long) (rng.nextInt(Controller.getSpeed()) + Controller.getSpeed() / 2));
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            System.out.println("End: " + Thread.currentThread().getName());
         }
     }
 

@@ -11,8 +11,8 @@ public class Controller implements Initializable {
     //PARAMETERS
     private double cellwidth;
     private double cellHeight;
-    private static int speed = 500;
-    private static double probability = 1.0;
+    private static int speed = 1000;
+    private static double probability = 0.2;
     static int n;
     static int m;
     @FXML
@@ -24,14 +24,24 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("Initializing");
-        n = 20; //Number of cells in a row
-        m = 10; //Number of cells in a column
+        n = 60; //Number of cells in a row
+        m = 30; //Number of cells in a column
         cellwidth = (double) 1000 / n;
         cellHeight = (double) 500 / m;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 Cell cell = new Cell(i * cellwidth, j * cellHeight, cellwidth, cellHeight);
                 cell.setId(Integer.toString(i) + "," + Integer.toString(j));
+                cell.setOnMouseClicked(event -> {
+                    System.out.println("Clicked on " + cell.getId());
+                    if(cell.isPaused){
+                        cell.isPaused = false;
+                        System.out.println("Unpausing");
+                    } else {
+                        cell.isPaused = true;
+                        System.out.println("Pausing");
+                    }
+                });
                 Color col = new Color(rng.nextDouble(), rng.nextDouble(), rng.nextDouble(), 1);
                 cell.setFill(col);
                 cell.setStroke(col);
